@@ -3,8 +3,8 @@
   button click
     modal
       p Content
-  button not dismissable
-    modal(:dismissable="false")
+  button not dissmissible
+    modal(not-dissmissible)
       p Content
       closer
   a(href="https://github.com/vue-comps/vue-comps-modal/blob/master/dev/basic.vue") source
@@ -26,7 +26,7 @@ module.exports =
   position absolute
   left 250px
   top 40px
-.vc-modal
+.modal
   background white
   width 80%
   height 60%

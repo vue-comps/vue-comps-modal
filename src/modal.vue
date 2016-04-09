@@ -1,6 +1,8 @@
 // out: ..
 <template lang="jade">
-.vc-modal(
+div(
+  v-el:modal
+  v-bind:class="classes"
   v-bind:style="style"
   v-if="opened"
   @keyup.esc="dismiss | notPrevented | prevent"
@@ -14,6 +16,8 @@ module.exports =
 
   mixins: [
     require("vue-mixins/getVue")
+    require("vue-mixins/isOpened")
+    require("vue-mixins/parentListener")
   ]
 
   filters:
@@ -24,50 +28,37 @@ module.exports =
     @overlay = require("vue-overlay")(@getVue())
 
   props:
+    "class":
+      type: String
+      default: "modal"
     "opacity":
       type: Number
       default: 0.5
-    "dismissable":
+    "notDissmissible":
       type: Boolean
-      default: true
-    "isOpened":
-      type:Boolean
       default: false
-    "fadeIn":
+    "transitionIn":
       type: Function
       default: ({el,cb}) ->
         @style.opacity = 1
         cb()
-    "fadeOut":
+    "transitionOut":
       type: Function
       default: ({el,cb}) ->
         @style.opacity = 0
         cb()
-    "parent":
-      type: Object
-    "onClick":
-      type: Boolean
-      default: true
 
   data: ->
-    opened: false
+    classes: [@class]
     closeOverlay: null
-    removeParentClickListener: null
     style:
       opacity: 0
       position: "fixed"
       left: 0
       right: 0
       zIndex: 1000
+      display: "block"
 
-  watch:
-    "parent": "setupParent"
-    "isOpened": (val) ->
-      if val != @opened
-        if val
-          @open()
-        else
-          @close()
   events:
     close: ->
       @close()
@@ -76,33 +67,33 @@ module.exports =
     doNothing: ->
 
     dismiss: ->
-      @close() if @dismissable
+      @close() unless @notDissmissible
 
     show: ->
-      @opened = true
-      @isOpened = true
-      #@$appendTo document.body
+      @setOpened()
+      @$appendTo document.body
       @$nextTick =>
         @$emit "beforeOpen"
-        @fadeIn el:@$el, cb: =>
+        @transitionIn el:@$els.modal, cb: =>
           @$emit "opened"
     hide: ->
       return unless @opened
       @$emit "beforeClose"
-      @fadeIn el:@$el, cb: =>
-        @opened = false
-        @isOpened = false
+      @transitionOut el:@$els.modal, cb: =>
+        @setClosed()
         @$emit "closed"
+        @$remove()
     open: ->
       return if @opened
-      {zIndex,close} = @overlay.open dismissable:@dismissable, opacity:@opacity, onClosed: => @close()
+      {zIndex,close} = @overlay.open dissmissible:!@notDissmissible, opacity:@opacity, onBeforeClose: => @close()
       @style.zIndex = zIndex
       @closeOverlay = close
       @show()
     close: ->
+      @hide()
       @closeOverlay?()
       @closeOverlay = null
-      @hide()
+
     onParentClick: (e) ->
       return if e.defaultPrevented
       if @opened
@@ -110,16 +101,9 @@ module.exports =
       else
         @open()
       e.preventDefault()
-    setupParent: (parent = @parent) ->
-      if @onClick
-        @removeParentClickListener?()
-        parent.addEventListener "click", @onParentClick
-        @removeParentClickListener = =>
-          parent.removeEventListener "click", @onParentClick
-
-  attached: ->
-    unless @parent?
-      @parent = @$el.parentElement
-    else
-      @setupParent()
+    toggle: ->
+      if @opened
+        @open()
+      else
+        @close()
 </script>

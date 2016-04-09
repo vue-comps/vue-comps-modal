@@ -27,12 +27,13 @@ For examples see `dev/`
 | Name | type | default | description |
 | ---:| --- | ---| --- |
 | opacity | Number | 0.5 | opacity of the overlay |
-| dismissable | Boolean | true | can it get closed by click on overlay or ESC? |
-| on-click | Boolean | true | will set-up click listener on parent |
+| not-dissmissible | Boolean | false | can it get closed by click on overlay or ESC? |
+| ignore-parent | Boolean | false | will not set-up click listener on parent |
 | is-opened | Boolean | false | (two-way) set to open / close |
-| fade-in | function | no animation | set animation with opacity = 1. Argument: {el,cb} |
-| fade-out | function | no animation | set animation with opacity = 0. Argument: {el,cb} |
+| transition-in | function | no animation | set animation with opacity = 1. Argument: {el,cb} |
+| transition-out | function | no animation | set animation with opacity = 0. Argument: {el,cb} |
 | parent | element | parentElement | where to listen for open click |
+| class | String | modal | class of the `div`|
 
 
 #### Events
