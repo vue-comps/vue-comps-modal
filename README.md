@@ -1,15 +1,15 @@
 # vue-comps-modal
 
-the best modal you can get
+the best modal you can get.
 
-### [See it in action](https://vue-comps.github.io/vue-comps-modal)
+### [Demo](https://vue-comps.github.io/vue-comps-modal)
 
 # Install
 
 ```sh
 npm install --save-dev vue-comps-modal
 ```
-or include `build/bundle.js`
+or include `build/bundle.js`.
 
 ## Usage
 ```coffee
@@ -20,8 +20,17 @@ components:
 components:
   "modal": window.vueComps.modal
 ```
+```html
+<button> Open Modal
+  <modal>
+    Content
+  </modal>
+</button>
+```
 
-For examples see `dev/`
+For examples see [`dev/`](https://github.com/vue-comps/vue-comps-modal/tree/master/dev).
+
+Note, that the modal will be appended to `document.body` on first opening.
 
 #### Props
 | Name | type | default | description |
@@ -47,12 +56,12 @@ For examples see `dev/`
 
 
 # Development
-Clone repository
+Clone repository.
 ```sh
 npm install
 npm run dev
 ```
-Browse to `http://localhost:8080/`
+Browse to `http://localhost:8080/`.
 
 ## License
 Copyright (c) 2016 Paul Pflugradt
