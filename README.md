@@ -36,7 +36,7 @@ Note, that the modal will be appended to `document.body` on first opening.
 | Name | type | default | description |
 | ---:| --- | ---| --- |
 | opacity | Number | 0.5 | opacity of the overlay |
-| not-dissmissible | Boolean | false | can it get closed by click on overlay or ESC? |
+| not-dismissable | Boolean | false | can it get closed by click on overlay or ESC? |
 | ignore-parent | Boolean | false | will not set-up click listener on parent |
 | is-opened | Boolean | false | (two-way) set to open / close |
 | transition-in | function | no animation | set animation with opacity = 1. Argument: {el,cb} |

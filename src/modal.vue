@@ -5,8 +5,8 @@ div(
   v-bind:class="classes"
   v-bind:style="style"
   v-if="opened"
-  @keyup.esc="dismiss | notPrevented | prevent"
-  @click="doNothing | notPrevented | prevent"
+  @keyup.esc="dismiss"
+  @click.prevent="doNothing"
   )
   slot No content
 </template>
@@ -15,17 +15,13 @@ div(
 module.exports =
 
   mixins: [
-    require("vue-mixins/getVue")
+    require("vue-mixins/vue")
     require("vue-mixins/isOpened")
     require("vue-mixins/parentListener")
   ]
 
-  filters:
-    notPrevented: require("vue-filters/notPrevented")
-    prevent: require("vue-filters/prevent")
-
   created: ->
-    @overlay = require("vue-overlay")(@getVue())
+    @overlay = require("vue-overlay")(@Vue)
 
   props:
     "class":
@@ -34,7 +30,7 @@ module.exports =
     "opacity":
       type: Number
       default: 0.5
-    "notDissmissible":
+    "notDismissable":
       type: Boolean
       default: false
     "transitionIn":
@@ -66,8 +62,10 @@ module.exports =
   methods:
     doNothing: ->
 
-    dismiss: ->
-      @close() unless @notDissmissible
+    dismiss: (e) ->
+      return if e.defaultPrevented
+      e.preventDefault()
+      @close() unless @notDismissable
 
     show: ->
       @setOpened()
@@ -85,7 +83,7 @@ module.exports =
         @$remove()
     open: ->
       return if @opened
-      {zIndex,close} = @overlay.open dissmissible:!@notDissmissible, opacity:@opacity, onBeforeClose: => @close()
+      {zIndex,close} = @overlay.open dismissable:!@notDismissable, opacity:@opacity, onBeforeClose: => @close()
       @style.zIndex = zIndex
       @closeOverlay = close
       @show()

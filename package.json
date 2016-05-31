@@ -17,9 +17,8 @@
     "node": "*"
   },
   "dependencies": {
-    "vue-filters": "^0.1.6",
-    "vue-overlay": "^0.1.0",
-    "vue-mixins": "^0.2.3"
+    "vue-overlay": "^1.0.0",
+    "vue-mixins": "^0.2.8"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",

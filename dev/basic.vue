@@ -3,8 +3,8 @@
   button click
     modal
       p Content
-  button not dissmissible
-    modal(not-dissmissible)
+  button not dismissable
+    modal(not-dismissable)
       p Content
       closer
   a(href="https://github.com/vue-comps/vue-comps-modal/blob/master/dev/basic.vue") source
