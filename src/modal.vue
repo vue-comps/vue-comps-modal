@@ -1,9 +1,9 @@
 // out: ..
-<template lang="jade">
+<template lang="pug">
 div(
   v-el:modal
-  v-bind:class="classes"
-  v-bind:style="style"
+  v-bind:class="computedClass"
+  v-bind:style="computedStyle"
   v-if="opened"
   @keyup.esc="dismiss"
   @click.prevent="doNothing"
@@ -18,6 +18,8 @@ module.exports =
     require("vue-mixins/vue")
     require("vue-mixins/isOpened")
     require("vue-mixins/parentListener")
+    require("vue-mixins/style")
+    require("vue-mixins/class")
   ]
 
   created: ->
@@ -25,8 +27,11 @@ module.exports =
 
   props:
     "class":
-      type: String
-      default: "modal"
+      default: -> []
+    "mergeClass":
+      default: -> []
+    "style":
+      default: -> []
     "opacity":
       type: Number
       default: 0.5
@@ -36,18 +41,17 @@ module.exports =
     "transitionIn":
       type: Function
       default: ({el,cb}) ->
-        @style.opacity = 1
+        @mergeStyle.opacity = 1
         cb()
     "transitionOut":
       type: Function
       default: ({el,cb}) ->
-        @style.opacity = 0
+        @mergeStyle.opacity = 0
         cb()
 
   data: ->
-    classes: [@class]
     closeOverlay: null
-    style:
+    mergeStyle:
       opacity: 0
       position: "fixed"
       left: 0
@@ -84,7 +88,7 @@ module.exports =
     open: ->
       return if @opened
       {zIndex,close} = @overlay.open dismissable:!@notDismissable, opacity:@opacity, onBeforeClose: => @close()
-      @style.zIndex = zIndex
+      @mergeStyle.zIndex = zIndex
       @closeOverlay = close
       @show()
     close: ->
