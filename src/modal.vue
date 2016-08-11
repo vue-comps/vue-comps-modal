@@ -24,11 +24,10 @@ module.exports =
 
   created: ->
     @overlay = require("vue-overlay")(@Vue)
-
+  computed:
+    mergeClass: -> []
   props:
     "class":
-      default: -> []
-    "mergeClass":
       default: -> []
     "style":
       default: -> []
