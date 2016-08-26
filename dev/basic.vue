@@ -1,12 +1,12 @@
 <template lang="pug">
 .container(style="padding:40px")
   button click
-    modal.modal
+    modal(v-ref:modal, v-bind:style="style")
       p Content
-  button not dismissable
-    modal.modal(not-dismissable)
-      p Content
-      closer
+  button(@click="toggle") not dismissable
+  modal(not-dismissable, ignore-parent,v-ref:notDismissable,v-bind:is-opened.sync="isOpened", v-bind:style="style")
+    p Content
+    button(@click.prevent="toggle") close
   br
   a(href="https://github.com/vue-comps/vue-comps-modal/blob/master/dev/basic.vue") source
 </template>
@@ -15,18 +15,16 @@
 module.exports =
   components:
     "modal" : require "../src/modal.vue"
-    "closer":
-      template: "<button @click.prevent='close'>close</button>"
-      methods:
-        close: ->
-          @$dispatch "close"
+  data: ->
+    isOpened: false
+    style:
+      background: "white"
+      width: "80%"
+      height: "60%"
+      margin: "auto"
+      padding: "20px"
+      top: "20%"
+  methods:
+    toggle: ->
+      @isOpened = !@isOpened
 </script>
-
-<style lang="stylus">
-.modal
-  background white
-  width 80%
-  height 60%
-  margin auto
-  top: 20%
-</style>

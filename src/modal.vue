@@ -62,10 +62,6 @@ module.exports =
       zIndex: 1000
       display: "block"
 
-  events:
-    close: ->
-      @close()
-      return true
   methods:
     doNothing: ->
 
@@ -108,7 +104,7 @@ module.exports =
       e.preventDefault()
     toggle: ->
       if @opened
-        @open()
-      else
         @close()
+      else
+        @open()
 </script>
