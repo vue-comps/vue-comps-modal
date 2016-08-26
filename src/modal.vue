@@ -47,6 +47,10 @@ module.exports =
       default: ({el,cb}) ->
         @mergeStyle.opacity = 0
         cb()
+    "zIndex":
+      type: Number
+      coerce: Number
+      default: 1500
 
   data: ->
     closeOverlay: null
@@ -86,7 +90,7 @@ module.exports =
         @$remove()
     open: ->
       return if @opened
-      {zIndex,close} = @overlay.open dismissable:!@notDismissable, opacity:@opacity, onBeforeClose: => @close()
+      {zIndex,close} = @overlay.open zIndex:@zIndex, dismissable:!@notDismissable, opacity:@opacity, onBeforeClose: => @close()
       @mergeStyle.zIndex = zIndex
       @closeOverlay = close
       @show()
