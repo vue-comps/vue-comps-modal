@@ -7,6 +7,7 @@ div(
   v-if="opened"
   @keyup.esc="dismiss"
   @click.prevent="doNothing"
+  v-bind:transition="cTransition"
   )
   slot No content
 </template>
@@ -20,6 +21,7 @@ module.exports =
     require("vue-mixins/parentListener")
     require("vue-mixins/style")
     require("vue-mixins/class")
+    require("vue-mixins/transition")
   ]
 
   created: ->
@@ -37,16 +39,6 @@ module.exports =
     "notDismissable":
       type: Boolean
       default: false
-    "transitionIn":
-      type: Function
-      default: ({el,cb}) ->
-        @mergeStyle.opacity = 1
-        cb()
-    "transitionOut":
-      type: Function
-      default: ({el,cb}) ->
-        @mergeStyle.opacity = 0
-        cb()
     "zIndex":
       type: Number
       coerce: Number
@@ -55,7 +47,6 @@ module.exports =
   data: ->
     closeOverlay: null
     mergeStyle:
-      opacity: 0
       position: "fixed"
       left: 0
       right: 0
@@ -73,17 +64,11 @@ module.exports =
     show: ->
       @setOpened()
       @$appendTo document.body
-      @$nextTick =>
-        @$emit "beforeOpen"
-        @transitionIn el:@$els.modal, cb: =>
-          @$emit "opened"
+
     hide: ->
       return unless @opened
-      @$emit "beforeClose"
-      @transitionOut el:@$els.modal, cb: =>
-        @setClosed()
-        @$emit "closed"
-        @$remove()
+      @setClosed()
+
     open: ->
       return if @opened
       {zIndex,close} = @overlay.open zIndex:@zIndex, dismissable:!@notDismissable, opacity:@opacity, onBeforeClose: => @close()

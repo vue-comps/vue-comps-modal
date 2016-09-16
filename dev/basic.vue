@@ -7,11 +7,15 @@
   modal(not-dismissable, ignore-parent,v-ref:notDismissable,v-bind:is-opened.sync="isOpened", v-bind:style="style")
     p Content
     button(@click.prevent="toggle") close
+  button with custom transition
+    modal(v-bind:style="style" transition="modal")
+      p Content
   br
   a(href="https://github.com/vue-comps/vue-comps-modal/blob/master/dev/basic.vue") source
 </template>
 
 <script lang="coffee">
+Velocity = require("velocity-animate")
 module.exports =
   components:
     "modal" : require "../src/modal.vue"
@@ -27,4 +31,25 @@ module.exports =
   methods:
     toggle: ->
       @isOpened = !@isOpened
+  transitions:
+    modal:
+      css: false
+      enter: (el,done) ->
+        Velocity.hook el, "scale", "0.4"
+        Velocity.hook el, "translateY", "-100%"
+        Velocity el, {opacity: 1,scale: 1,translateY: 0}, {
+          duration: 1000
+          queue: false
+          complete: done
+        }
+      enterCancelled: (el) ->
+        Velocity el, "stop"
+      leave: (el,done) ->
+        Velocity el, {opacity: 0,scale:0.4,translateY:"-100%"}, {
+          duration: 1000
+          queue: false
+          complete: done
+        }
+      leaveCancelled: (el) ->
+        Velocity el, "stop"
 </script>

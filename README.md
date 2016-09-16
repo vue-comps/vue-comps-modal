@@ -39,20 +39,60 @@ opacity | Number | 0.5 | opacity of the overlay
 not-dismissable | Boolean | false | can it get closed by click on overlay or ESC?
 ignore-parent | Boolean | false | will not set-up click listener on parent
 is-opened | Boolean | false | (two-way) set to open / close
-transition-in | Function | no animation | set animation with opacity = 1. Argument: {el,cb}
-transition-out | Function | no animation | set animation with opacity = 0. Argument: {el,cb}
+transition | String | - | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where to listen for open click
-zIndex | Number | 1500 | minimum zIndex of the overlay, cannot be lower than 100 (see [vue-overlay](https://github.com/vue-comps/vue-overlay) for specifics)
+z-index | Number | 1500 | minimum zIndex of the overlay, cannot be lower than 1000 (see [vue-overlay](https://github.com/vue-comps/vue-overlay) for specifics)
 
 
 #### Events
 Name |  description
 ---:| ---
-before-open | will be called before open animation
-opened |  will be called when opened
-before-close |  will be called before close animation
-closed |  will be called when closed
+before-enter | will be called before open animation
+after-enter |  will be called when opened
+before-leave |  will be called before close animation
+after-leave |  will be called when closed
 
+#### Transition
+
+You can provide a vue transition like this:
+```js
+Vue.transition("fade",{
+  // your transition
+})
+// or in the instance:
+transitions: {
+  fade: {
+    // your transition
+  }
+}
+// usage:
+template: "<modal transition='fade'></modal>"
+```
+
+The background is a singleton, you can globaly provide a custom fade function. This has to be done only once (when you use webpack):
+
+```js
+Velocity = require("velocity-animate")
+Overlay = require("vue-overlay")
+Overlay.obj.methods.fade = function ({el,opacity,cb}) {
+  Velocity el, {opacity: opacity},{
+    duration: 300,
+    queue: false,
+    easing: 'easeOutQuad',
+    complete: cb
+  }
+}
+```
+
+## Changelog
+
+- 1.1.0  
+now using vue transitions  
+events are renamed after vue transitions  
+
+- 1.0.0  
+added `z-index` prop
+remove `close` event listening
 
 # Development
 Clone repository.
