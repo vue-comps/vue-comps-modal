@@ -9,7 +9,7 @@ div(
   @click.prevent="doNothing"
   v-bind:transition="cTransition"
   )
-  slot No content
+  slot
 </template>
 
 <script lang="coffee">
@@ -36,6 +36,7 @@ module.exports =
     "opacity":
       type: Number
       default: 0.5
+      coerce: Number
     "notDismissable":
       type: Boolean
       default: false
@@ -63,7 +64,8 @@ module.exports =
 
     show: ->
       @setOpened()
-      @$appendTo document.body
+      @$nextTick =>
+        document.body.appendChild @$els.modal
 
     hide: ->
       return unless @opened
@@ -92,4 +94,9 @@ module.exports =
         @close()
       else
         @open()
+
+  beforeDestroy: ->
+    el = @$els.modal
+    if el?
+      el.parentNode.removeChild(el)
 </script>

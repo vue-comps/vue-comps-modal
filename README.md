@@ -69,22 +69,13 @@ transitions: {
 template: "<modal transition='fade'></modal>"
 ```
 
-The background is a singleton, you can globaly provide a custom fade function. This has to be done only once (when you use webpack):
-
-```js
-Velocity = require("velocity-animate")
-Overlay = require("vue-overlay")
-Overlay.obj.methods.fade = function ({el,opacity,cb}) {
-  Velocity el, {opacity: opacity},{
-    duration: 300,
-    queue: false,
-    easing: 'easeOutQuad',
-    complete: cb
-  }
-}
-```
+The background is managed by `vue-overlay`.
+See [here](https://github.com/vue-comps/vue-overlay#overlayfadeelopacitycb) for an example on how to change its fading function.
 
 ## Changelog
+
+- 1.1.1  
+removed usage of `$appendTo`  
 
 - 1.1.0  
 now using vue transitions  
