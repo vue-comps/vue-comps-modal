@@ -51,6 +51,7 @@ before-enter | will be called before open animation
 after-enter |  will be called when opened
 before-leave |  will be called before close animation
 after-leave |  will be called when closed
+toggled(isOpened:Boolean) | emitted when gets opened or closed. Alternative to use two-way `is-opened` prop
 
 #### Transition
 
@@ -73,6 +74,8 @@ The background is managed by `vue-overlay`.
 See [here](https://github.com/vue-comps/vue-overlay#overlayfadeelopacitycb) for an example on how to change its fading function.
 
 ## Changelog
+-  
+added toggled event  
 
 - 1.1.1  
 removed usage of `$appendTo`  
