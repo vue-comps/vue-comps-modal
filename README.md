@@ -85,8 +85,8 @@ now using vue transitions
 events are renamed after vue transitions  
 
 - 1.0.0  
-added `z-index` prop
-remove `close` event listening
+added `z-index` prop  
+remove `close` event listening  
 
 # Development
 Clone repository.
