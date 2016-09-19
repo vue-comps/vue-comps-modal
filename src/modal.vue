@@ -99,6 +99,7 @@ module.exports =
         @open()
 
   beforeDestroy: ->
+    @closeOverlay?()
     el = @$els.modal
     if el?
       el.parentNode.removeChild(el)
