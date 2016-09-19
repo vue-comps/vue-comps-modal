@@ -39,7 +39,7 @@ opacity | Number | 0.5 | opacity of the overlay
 not-dismissable | Boolean | false | can it get closed by click on overlay or ESC?
 ignore-parent | Boolean | false | will not set-up click listener on parent
 is-opened | Boolean | false | (two-way) set to open / close
-transition | String | - | name of a vue transition. [Detailed description](#transition)
+transition | String | "modal" | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where to listen for open click
 z-index | Number | 1500 | minimum zIndex of the overlay, cannot be lower than 1000 (see [vue-overlay](https://github.com/vue-comps/vue-overlay) for specifics)
 
@@ -74,8 +74,9 @@ The background is managed by `vue-overlay`.
 See [here](https://github.com/vue-comps/vue-overlay#overlayfadeelopacitycb) for an example on how to change its fading function.
 
 ## Changelog
--  
+- 1.2.0  
 added toggled event  
+set default transition  
 
 - 1.1.1  
 removed usage of `$appendTo`  

@@ -8,7 +8,7 @@
     p Content
     button(@click.prevent="toggle") close
   button with custom transition
-    modal(v-bind:style="style" transition="modal")
+    modal(v-bind:style="style" transition="modal2")
       p Content
   br
   a(href="https://github.com/vue-comps/vue-comps-modal/blob/master/dev/basic.vue") source
@@ -32,7 +32,7 @@ module.exports =
     toggle: ->
       @isOpened = !@isOpened
   transitions:
-    modal:
+    modal2:
       css: false
       enter: (el,done) ->
         Velocity.hook el, "scale", "0.4"

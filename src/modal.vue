@@ -29,21 +29,24 @@ module.exports =
   computed:
     mergeClass: -> []
   props:
-    "class":
+    class:
       default: -> []
-    "style":
+    style:
       default: -> []
-    "opacity":
+    opacity:
       type: Number
       default: 0.5
       coerce: Number
-    "notDismissable":
+    notDismissable:
       type: Boolean
       default: false
-    "zIndex":
+    zIndex:
       type: Number
       coerce: Number
       default: 1500
+    transition:
+      type: String
+      default: "modal"
 
   data: ->
     closeOverlay: null
