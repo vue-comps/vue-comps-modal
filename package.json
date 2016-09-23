@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "vue-overlay": "^1.0.1",
-    "vue-mixins": "^0.3.0"
+    "vue-mixins": "^0.3.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",

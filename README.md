@@ -74,6 +74,9 @@ The background is managed by `vue-overlay`.
 See [here](https://github.com/vue-comps/vue-overlay#overlayfadeelopacitycb) for an example on how to change its fading function.
 
 ## Changelog
+- 1.2.1  
+close overlay on destroy  
+
 - 1.2.0  
 added toggled event  
 set default transition  
