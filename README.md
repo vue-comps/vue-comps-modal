@@ -1,3 +1,5 @@
+# DEPRECATED see [cerijs](https://github.com/cerijs) and [ceri-modal](https://github.com/ceri-comps/ceri-modal)
+
 # vue-comps-modal
 
 the best modal you can get.
